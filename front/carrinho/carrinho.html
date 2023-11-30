@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Document</title>
+</head>
+<body>
+    <div class="carrinho-div">
+        <h1 class="titulo">Carrinho</h1>
+        <div class="produtoscarrinho-div">
+
+        </div>
+        <a href="erro.html"><button class="button">Finalizar Compra</button></a>
+        <a href="../index.html"><button class="button">Menu Principal</button></a>
+    </div>
+    
+</body>
+<script>
+    //função que recebe os dados do servidor através do metodo get
+    async function recebercarrinho(){
+        const resposta = await fetch("http://localhost:3000/carrinho")
+        const carrinho = await resposta.json()
+        return carrinho
+    }
+    //função que manipula a pagina para mostrar os produtos que foram colocados no carrinho
+    async function listar(){
+        const carrinho = await recebercarrinho()
+        const produtocarrinho = document.querySelector('.produtoscarrinho-div')
+        carrinho.forEach(produto => {
+            const produtodiv = document.createElement('div')
+            const produtonome = document.createElement('p')
+            const labelnome = document.createElement('p')
+            const labelid = document.createElement('p')
+            const produtoid = document.createElement('p')
+            const produtonometexto = document.createTextNode(produto.nomeproduto)
+            const labelnometexto = document.createTextNode('nome: ')
+            const labelidtexto = document.createTextNode('codigo: ')
+            const produtoidtexto = document.createTextNode(produto.codigo_produto)
+            produtonome.appendChild(produtonometexto)
+            labelnome.appendChild(labelnometexto)
+            labelid.appendChild(labelidtexto)
+            produtoid.appendChild(produtoidtexto)
+            produtocarrinho.appendChild(produtodiv)
+            produtodiv.appendChild(labelnome)
+            produtodiv.appendChild(produtonome)
+            produtodiv.appendChild(labelid)
+            produtodiv.appendChild(produtoid)
+            produtodiv.classList.add("produtocarrinho")
+        });
+
+    }
+
+    listar()
+</script>
+</html>

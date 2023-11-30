@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Document</title>
+</head>
+<body>
+    <div class="usuario-div">
+        <h1 class="titulo">Usuário</h1>
+        <div class="nome-usuario">
+            <p>Nome: </p>
+        </div>
+        <div class="sobrenome-usuario">
+            <p>Sobrenome: </p>
+        </div>
+        <div class="email-usuario">
+            <p>Email: </p>
+        </div>
+        <div class="endereço-usuario">
+            <p >Endereço: </p>
+        </div>
+        <a href="../index.html"><button class="button">Menu Principal</button></a>
+    </div>
+</body>
+
+<script>
+    //função que pega os dados do usuario através do metodo get e manipula a pagina para mostrar os dados do usuario
+    async function mostrarusuario(){
+        const resposta = await fetch("http://localhost:3000/usuario")
+        const usuario = await resposta.json()
+        const nomediv = document.querySelector('.nome-usuario')
+        const sobrenomediv = document.querySelector('.sobrenome-usuario')
+        const emaildiv = document.querySelector('.email-usuario')
+        const enderecodiv = document.querySelector('.endereço-usuario')
+        const nome = document.createElement('p')
+        const sobrenome = document.createElement('p')
+        const email = document.createElement('p')
+        const endereco = document.createElement('p')
+        const nometexto = document.createTextNode( usuario[0].primeironome)
+        const sobrenometexto = document.createTextNode( usuario[0].sobrenome)
+        const emailtexto = document.createTextNode( usuario[0].email)
+        const enderecotexto = document.createTextNode( usuario[0].endereco)
+        nome.appendChild(nometexto)
+        sobrenome.appendChild(sobrenometexto)
+        email.appendChild(emailtexto)
+        endereco.appendChild(enderecotexto)
+        nomediv.appendChild(nome)
+        sobrenomediv.appendChild(sobrenome)
+        emaildiv.appendChild(email)
+        enderecodiv.appendChild(endereco)
+    }
+    mostrarusuario()
+</script>
+</html>

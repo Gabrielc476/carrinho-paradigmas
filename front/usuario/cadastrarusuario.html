@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Document</title>
+</head>
+<body>
+    <div class="cadastrarusuario-div">
+        <h1 class="titulo">Cadastre um Usuário</h1>
+        <form class="form">
+            <input type="text" placeholder="primeiro nome" class="cadastrarusuario-input" id="primnome">
+            <input type="text" placeholder="sobrenome" class="cadastrarusuario-input" id="sobrenome">
+            <input type="email" placeholder="E-mail" class="cadastrarusuario-input" id="email">
+            <input type="password" placeholder="senha" class="cadastrarusuario-input" id="senha">
+            <input type="text" placeholder="endereço" class="cadastrarusuario-input" id="endereco">
+            <button onclick="" class="button">Cadastrar</button>
+        </form>
+        <a href="../index.html"><button class="button">Menu Principal</button></a>
+    </div>
+</body>
+<script>
+    //função para pegar os dados do form e enviar ao server através do metodo post
+    const form = document.querySelector('.form')
+    form.addEventListener('submit',  e => {
+        e.preventDefault()
+        const primnome = document.getElementById('primnome')
+        const sobrenome = document.getElementById('sobrenome')
+        const email = document.getElementById('email')
+        const senha = document.getElementById('senha')
+        const endereco = document.getElementById('endereco')
+        
+        const dados = {
+            primnome : primnome.value,
+            sobrenome : sobrenome.value,
+            email : email.value,
+            senha : senha.value,
+            endereco : endereco.value,
+            
+        }
+        console.log(dados)
+         fetch("http://localhost:3000/cadastrarusuario", {
+            method : 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(dados)
+        })
+    })
+</script>
+</html>

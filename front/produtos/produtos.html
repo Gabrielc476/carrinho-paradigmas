@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <link rel="stylesheet" href="style.css">
+    <title>Document</title>
+</head>
+<body>
+    <div class="produtos-div">
+        <h1 class="titulo">Produtos</h1>
+        <div class="produtos"></div>
+        <a href="../index.html"><button class="button">Menu Principal</button></a>
+    </div>
+    
+</body>
+
+<script>
+    //função que recebe os dados do servidor através do metodo get
+    async function receberprodutos(){
+        const resposta = await fetch("http://localhost:3000/produtos")
+        const produtos = await resposta.json()
+        console.log(produtos)
+        return produtos
+        
+        
+    }
+
+    
+    //função que manipula a pagina para mostrar os produtos
+    async function listarprodutos(){
+        const produtos = await receberprodutos()
+
+        const produtosdiv = document.getElementsByClassName('produtos')
+        produtos.forEach(  produto => {
+            const produtodiv = document.createElement('div')
+            const categoria = document.createElement('p')
+            const preco = document.createElement('p')
+            const nome = document.createElement('p')
+            const categoriatexto = document.createTextNode(produto.categoria)
+            const categoriatitulo = document.createTextNode("Categoria: ")
+            const precotexto = document.createTextNode(produto.preco)
+            const precotitulo = document.createTextNode("Preço: ")
+            const nometexto = document.createTextNode(produto.nome)
+            const nometitulo = document.createTextNode("Nome: ")
+            const adicionar = document.createElement("button")
+            adicionar.append(document.createTextNode("Adicionar"))
+            adicionar.onclick = async function adicionarnocarrinho(){
+                console.log(produto)
+                const dados = {
+                    nomeproduto : produto.nome,
+                    produtoID : produto.produtoid
+
+                }
+                console.log(dados)
+                await fetch("http://localhost:3000/adicionarnocarrinho", {
+                    method : 'POST',
+                    headers : {
+                        'Content-Type' : 'application/json'
+                    },
+                    body: JSON.stringify(dados)
+                })
+            }
+            categoria.appendChild(categoriatitulo)
+            nome.appendChild(nometitulo)
+            preco.appendChild(precotitulo)
+            categoria.appendChild(categoriatexto)
+            nome.appendChild(nometexto)
+            preco.appendChild(precotexto)
+            produtodiv.appendChild(categoria)
+            produtodiv.appendChild(preco)
+            produtodiv.appendChild(nome)
+            adicionar.classList.add("button-produtos")
+            produtodiv.appendChild(adicionar)
+            
+            produtodiv.classList.add("produto-div")
+            
+            produtosdiv[0].appendChild(produtodiv)
+            
+        });
+
+        
+    }
+    listarprodutos()
+
+
+
+    
+</script>
+</html>

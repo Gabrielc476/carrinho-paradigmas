@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Document</title>
+</head>
+<body>
+    <div class="cadastrarproduto-div">
+        <form  class="form">
+            <div class="cadastrarproduto-form">
+                <h1 class="titulo">Cadastre um produto</h1>
+                <input type="text" placeholder="categoria" class="cadastrarproduto-input" id="categoria">
+                <input type="text" placeholder="preço" class="cadastrarproduto-input" id="preco">
+                <input type="text" placeholder="nome" class="cadastrarproduto-input" id="nome">
+                <button type="submit" class="button">Cadastrar Produto</button>
+            </div>
+            
+        </form>
+        <a href="../index.html"><button class="button">Menu Principal</button></a>
+    </div>
+</body>
+<script>
+    //função para pegar os dados do form e enviar ao servidor com metodo post
+    const form = document.querySelector('.form')
+    form.addEventListener('submit',  e => {
+        e.preventDefault()
+        const categoria = document.getElementById('categoria')
+        const preco = document.getElementById('preco')
+        const nome = document.getElementById('nome')
+        const dados = {
+            categoria : categoria.value,
+            preco : preco.value,
+            nome : nome.value
+        }
+        console.log(dados)
+         fetch("http://localhost:3000/cadastrarproduto", {
+            method : 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(dados)
+        })
+    })
+</script>
+</html>
